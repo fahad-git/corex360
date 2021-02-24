@@ -1,0 +1,104 @@
+@font-face {
+  font-family: AstroArmadaExpanded;
+  src: url("../fonts/astro-armada-cufonfonts-webfont/AstroArmada-RpXBl.woff");
+}
+
+
+.login-dark {
+  height: 0px;
+  width:0px;
+  top: 10vh;
+  margin:0px;
+  padding:0px
+  
+  /* background: #475d62 url(../../assets/img/clinic_blur.jpg); */
+  /* background-size: cover; */
+  /* position: relative; */
+}
+
+.login-dark form {
+  max-width: 320px;
+  width: 90%;
+  background-color: rgba(184, 178, 140, 1);
+  position: absolute;
+  z-index:1;
+  padding: 40px;
+  border-radius: 4px;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  color: #fff;
+  box-shadow: 3px 3px 4px rgba(0,0,0,0.2);
+}
+
+.login-dark .illustration {
+  text-align: center;
+  /* padding: 15px 0 20px; */
+  font-size: 100px;
+  color:  rgba(35, 48, 24, 1);
+}
+
+.login-dark form .form-control {
+  background: none;
+  border: none;
+  /* border-bottom: 1px solid #6D7D67; */
+  border-radius: 5px;
+  box-shadow:none;
+  outline: none;
+  color:rgba(35, 48, 24, 1);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.login-dark form  .form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: rgba(255,255,255,0.5);
+}
+
+.login-dark form .form-group {
+  border-bottom: 1px solid #6D7D67;
+  border-radius: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.login-dark .bar{
+  font-family:AstroArmadaExpanded;
+  color: rgba(35, 48, 24, 1);
+}
+
+
+.login-dark form .btn-primary {
+  background: rgba(35, 48, 24, 1);
+  border: none;
+  border-radius: 4px;
+  padding: 11px;
+  box-shadow: none;
+  margin-top: 26px;
+  text-shadow: none;
+  outline: none;
+}
+
+.login-dark form .btn-primary:hover, .login-dark form .btn-primary:active {
+  background: rgba(35, 48, 24, 0.9);
+  outline: none;
+}
+
+.login-dark form .forgot {
+  display: block;
+  text-align: center;
+  font-size: 12px;
+  color: rgba(35, 48, 24, 1);
+  opacity: 0.9;
+  text-decoration: none;
+}
+
+.login-dark form .forgot:hover, .login-dark form .forgot:active {
+  opacity: 1;
+  text-decoration: none;
+}
+
+.login-dark form .btn-primary:active {
+  transform: translateY(1px);
+}
+
+

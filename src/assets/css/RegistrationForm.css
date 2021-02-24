@@ -1,0 +1,76 @@
+.registrationform{
+    background-color: rgba(184, 178, 140, 1);
+}
+.registrationform .container{
+    background-color:rgba(184, 178, 140, 1);
+    padding: 0px 0px !important;
+    margin: 0px 0px !important;
+}
+
+.registrationform .container h3{
+    margin-top: 5%;
+    color: rgba(35, 48, 24, 1);
+} 
+
+.registrationform .container .divider{
+    margin-top: 0%;
+    background-color: rgba(35, 48, 24, 1);
+} 
+
+.registrationform .form-control {
+    background: #f7f9fc;
+    border: none;
+    border-bottom: 1px solid #dfe7f1;
+    border-radius: 8px;
+    box-shadow: none;
+    outline: none;
+    color:inherit;
+    text-indent: 2vmin;
+    font-size: calc(2px + 2vmin);
+}
+
+.registrationform .bar{
+    font-family:AstroArmadaExpanded;
+    color: rgba(35, 48, 24, 1);
+}
+
+.passwordfield{
+    background: #f7f9fc;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    outline: none;
+    color: inherit;
+    font-size: calc(2px + 2vmin);
+}
+
+
+.registrationform .form-control input{
+    text-indent: 0px !important;
+    padding: 0px 0px !important;
+}
+
+
+.registrationform .already {
+    display: block;
+    text-align: center;
+    font-size: calc(2px + 2vmin);
+    color: rgb(0, 0, 0);;
+    opacity: 0.9;
+    text-decoration: none;
+}
+
+.registrationform .already a {
+    color: rgba(35, 48, 24, 1);
+}
+
+.registrationform .btn-primary {
+    background: #214a80;
+    border: none;
+    border-radius: 4px;
+    padding: 11px;
+    box-shadow: none;
+    margin-top: 2vmin;
+    text-shadow: none;
+    outline: none !important;
+}
