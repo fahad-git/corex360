@@ -132,10 +132,10 @@ function UserManagement () {
                                     <div className="col-12 col-sm-6 pull-right">
 
                                    
-                                        <div className="search-bar form-control">
-                                         <input type="text" style={{outline:"none", border:"none"}} onChange={e => setSearchQuery(e.target.value)} />
+                                    <div className="search-bar form-control">
+                                        <input type="text" style={{outline:"none", border:"none"}} onChange={e => setSearchQuery(e.target.value)} />
                                         <i className="ion-ios-search-strong" onClick={searchHandler}></i>
-                                        </div>
+                                    </div>
 
                                     </div>
                                 </div>

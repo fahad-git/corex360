@@ -25,15 +25,15 @@ function AddUser () {
                         </div>
 
                         <div className="row no-gutters" style={{marginBottom:"10px"}}>
-                                 <div className="col-12"  >
-                                    <select className="form-control" onChange={e => setUserRole(e.target.value)} style={{width:"97%"}}>
-                                        <option value="" defaultValue>Role</option>
-                                        <option value="2" className="add-user-role" >Admin</option>
-                                        <option value="3" className="add-user-role" >Sub Admin</option>
-                                        <option value="4" className="add-user-role" >Admin User</option>
-                                        <option value="5 restrictions" className="add-user-role">Sales User</option>
-                                    </select>
-                                 </div>
+                            <div className="col-12"  >
+                            <select className="form-control" onChange={e => setUserRole(e.target.value)} style={{width:"97%"}}>
+                                <option value="" defaultValue>Role</option>
+                                <option value="2" className="add-user-role" >Admin</option>
+                                <option value="3" className="add-user-role" >Sub Admin</option>
+                                <option value="4" className="add-user-role" >Admin User</option>
+                                <option value="5 restrictions" className="add-user-role">Sales User</option>
+                            </select>
+                            </div>
                         </div>
 
                         <div className="row no-gutters">

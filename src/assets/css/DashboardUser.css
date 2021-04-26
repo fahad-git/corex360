@@ -1,0 +1,17 @@
+@font-face {
+    font-family: AstroArmadaExpanded;
+    src: url("../fonts/astro-armada-cufonfonts-webfont/AstroArmada-RpXBl.woff");
+}
+
+.dashboard-user{
+    width: 100% !important;
+    min-height: 80vh !important;
+}
+
+.heading{
+    font-size: calc(10px + 5vmin);
+    color:rgb(49, 42, 42);
+    /* font-weight: bold; */
+    letter-spacing: 7px;
+    font-family:AstroArmadaExpanded;
+}

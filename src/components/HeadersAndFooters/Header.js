@@ -1,9 +1,11 @@
 import React, {useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import '../assets/bootstrap/css/bootstrap.min.css';
-import '../assets/css/Header.css';
+import '../../assets/bootstrap/css/bootstrap.min.css';
+import '../../assets/css/Header.css';
 
-import logo from '../assets/img/logo.png';
+import logo from '../../assets/img/logo-white.png';
+import { useUserContext } from '../UserContext';
+import { LOGOUT } from '../Actions/user';
 
 function Header () {
 
@@ -20,6 +22,8 @@ function Header () {
     const [userName, setUserName] = useState();
 
     var [screenName, setScreenName] = useState("Dashboard");
+
+    const { state, dispatch } = useUserContext();
 
     const user = JSON.parse(localStorage.getItem("user"));
 
@@ -41,11 +45,11 @@ function Header () {
     }
     
     const logoutHandler = () =>{
-        // alert("logout");
         localStorage.removeItem("user");
-        // dispatch({
-        //     type: "LOGOUT"
-        // });
+        // console.log(state)
+        dispatch({
+            type: LOGOUT,
+        });
         history.push('/home');
     }
 

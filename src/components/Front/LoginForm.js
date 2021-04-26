@@ -4,27 +4,23 @@ import {useHistory} from 'react-router-dom';
 import '../../assets/bootstrap/css/bootstrap.min.css';
 import '../../assets/fonts/ionicons.min.css';
 import '../../assets/css/LoginForm.css';
-
-import HeaderContext from '../../HeaderContext';
+import { Authenticate } from './../Services/Auth';
+import { useUserContext } from './../UserContext';
+import USER, { REGISTER_MODAL_OPEN, TOGGLE_HEADER, FORGET_PASSWORD_MODAL_OPEN, LOGIN_MODAL_CLOSE } from '../Actions/user';
 
 function LoginForm(props) {
 
     const history = useHistory();
 
-    var setHeader = props.setHeader;
+    const {state, dispatch} = useUserContext();
 
+    var [headerName, setHeaderName] = useState(props.headerName)
     var [userName, setUserName] = useState("");
     var [password, setPassword] = useState("");
     var [errorMessage, setErrorMessage] = useState(["none",""]);
 
     const updateUserName = (e) => setUserName(e.target.value);
-    const updatePassword = (e) => setPassword(e.target.value)
-
-
-    // const dispatch = useDispatch();
-
-    // const { account_username, account_type, account_profile_url } = useSelector( (state) => state.userReducer );
-
+    const updatePassword = (e) => setPassword(e.target.value);
 
     const validateFormData = (event) => {
         event.preventDefault();
@@ -34,67 +30,39 @@ function LoginForm(props) {
         setUserName(userName.trim());
         setPassword(password.trim());
 
-        // alert("Current state " + JSON.stringify(this.state))
-        if(userName === "" ){
-            setErrorMessage(["block","username can not be empty"]);
-            return;
-        }else if (password === "" ){
-            setErrorMessage(["block","password can not be empty"]);
-            return;
-        }       
-
-
-        if(userName.toLowerCase() === "admin" && password === "admin"){
-            setHeader(false)
-            history.push("/dashboard");
-        }
-
-        // var passwordHash = require('password-hash');
-        // var hashedPassword = passwordHash.generate(password);
-
-        // this hashedPassword will be used for varification.
-
-/*
-
-        const callback = (user) => {
-
-            if(user == null){
-                setErrorMessage(["block","Invalid Username or Password"]);
-                return;
+        Authenticate({"username": userName, "password":password})
+        .then(res => {     
+            localStorage.removeItem("user");
+            localStorage.setItem("user", JSON.stringify(res.data));
+            // Here actions are dispatched
+            dispatch({type:USER, payload:res.data})
+            dispatch({type:LOGIN_MODAL_CLOSE})
+            if(res.data.role == "super admin"){
+                dispatch({type:TOGGLE_HEADER, header:"ADMIN"})
+                history.push("/dashboard");
+            }else{
+                dispatch({type:TOGGLE_HEADER, header:"USER"})
+                history.push("/corex-board/dashboard");
             }
-
-                localStorage.removeItem("user");
-                localStorage.setItem("user", JSON.stringify(user));
-                console.log("From Callback:" + JSON.stringify(user))
-                
-                if(user.accountType.toLowerCase() == "admin")
-                    history.push('/admin');
-                else if(user.accountType.toLowerCase() == "director")
-                    history.push('/director');
-                else
-                    history.push('/clinician');
-        }
-*/
-
-        // API calling 
-        // login.login(userName, password, callback);
+        }).catch(err => {
+            setErrorMessage(["block","Invalid username or password"]);
+        });
     }
 
 
     const registerUser = () => {
-        alert("Register User Here!")
-        // this.props.history.push('register');
-        
+        dispatch({type:REGISTER_MODAL_OPEN});
     }
 
     const forgetPassword = () => {
-        alert("Password Forgotten") 
+        // alert("Password Forgotten") 
+        dispatch({type:FORGET_PASSWORD_MODAL_OPEN})
     }
 
     return <div>
                 <div className="login-dark">
                     <form onSubmit={validateFormData}> 
-                        <h3 className="bar"><center>LOGIN TO</center>COREX PLANNING</h3>
+                        <h3 className="bar"><center>LOGIN TO <br/> {headerName}</center></h3>
                         <div className="illustration"><i className="icon ion-ios-locked-outline"></i></div>
                         <div className="row form-group">
                             <i className="col-1 ion-person"></i>

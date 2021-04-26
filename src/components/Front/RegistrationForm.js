@@ -3,17 +3,25 @@ import {useHistory} from 'react-router-dom';
 import './../../assets/bootstrap/css/bootstrap.min.css';
 import '../../assets/fonts/ionicons.min.css';
 import './../../assets/css/RegistrationForm.css';
+import { Register } from '../Services/Auth';
+
+import { ToastContainer, toast } from 'react-toastify';
+import { useUserContext } from '../UserContext';
+import { LOGIN_MODAL_OPEN } from '../Actions/user';
 
 function RegistrationForm(){
 
     const history = useHistory();
 
+    const {state, dispatch} = useUserContext();
+
     var [companyName, setCompanyName] = useState('');
     var [address, setAddress] = useState('');
     var [town, setTown] = useState('');
-    var [state, setState] = useState('');
+    var [countryState, setState] = useState('');
     var [country, setCountry] = useState('');
     var [billingEmail, setBillingEmail] = useState('');
+    var [phoneNo, setPhoneNo] = useState('')
     
     var [primaryName, setPrimaryName] = useState('');
     var [primaryTitle, setPrimaryTitle] = useState('');
@@ -37,22 +45,12 @@ function RegistrationForm(){
     var [secondary_confirm_password_eye_icon, set_secondary_confirm_password_eye_icon] = useState("ion-eye");
 
     // const updateClinicName = (e) => setClinicName(e.target.value);
-
+    var [disableRegBtn, setDisableRegBtn] = useState(false);
 
     var [error1, setError1] = useState({"display":"none", "msg":""});
     var [error2, setError2] = useState({"display":"none", "msg":""});
 
     const submitHandler = () =>{
-        
-        let companyData = {
-            "companyName":companyName,
-            "address":address,
-            "town":town,
-            "state":state,
-            "country":country,
-            "billingEmail":billingEmail,
-        }
-
         let primaryContact = {
             "primaryName":primaryName,
             "primaryTitle":primaryTitle,
@@ -71,13 +69,72 @@ function RegistrationForm(){
             "secondaryPassword":secondaryPassword
         }
 
-        console.log(companyData);
-        console.log(primaryContact);
-        console.log(secondaryContact);
+        let insertedObj = {
+            "employees": [
+            ],
+            "admins": [
+                {
+                    "login": {
+                        "employees": null,
+                        "superAdmin": null,
+                        "username": primaryEmail,
+                        "password": primaryPassword,
+                        "status": "Active",
+                        "roleId": 2
+                    },
+                    "adminName": primaryName,
+                    "title": primaryTitle,
+                    "phoneNo": primaryPhoneNumber,
+                    "email": primaryEmail,
+                    "mobile": primaryMobile
+                },
+                {
+                    "login": {
+                        "employees": null,
+                        "superAdmin": null,
+                        "username": secondaryEmail,
+                        "password": secondaryPassword,
+                        "status": "Active",
+                        "roleId": 2
+                    },
+                    "adminName": secondaryName,
+                    "title":secondaryTitle,
+                    "phoneNo": secondaryPhoneNumber,
+                    "email": secondaryEmail,
+                    "mobile": secondaryMobile
+                }
+            ],
+            "companyName": companyName,
+            "town":town,
+            "phoneNo": phoneNo,
+            "email": billingEmail,
+            "address": address,
+            "state": countryState,
+            "country": country
+        }
+
+        console.log(insertedObj);
+        Register(insertedObj)
+        .then(res => {
+            let msg = ""
+            if(res.data)
+                msg = "Registered Successfully"
+            else
+                msg = "Registration Failed"
+            setDisableRegBtn(true)
+            toast(msg, {
+                containerId:null,
+                type:"success",
+                onClose: () => window.location.reload()
+                });
+            
+        }).catch(err => {
+            console.log("registration failed")
+        })
     }
 
     const moveToLoginHandler = () => {
-        
+        dispatch({type:LOGIN_MODAL_OPEN});
     }
 
     const validatePrimaryPassword = () => {
@@ -96,9 +153,9 @@ function RegistrationForm(){
 
     }
 
-    return <div className="registrationform">
+    return <>
+            <div className="registrationform">
                 <div className="container">
-
                     <div className="row justify-content-center">
                         <h3 className="col-10">Company Information <hr className="col-11 divider"/></h3>
                     </div>
@@ -109,6 +166,7 @@ function RegistrationForm(){
                             <div className="col-10 form-group"><input className="col-12 form-control" type="text" name="town" placeholder="Town" onChange = {(e) => setTown(e.target.value.trim())} /></div>
                             <div className="col-5 form-group"><input className="col-12 form-control" type="text" name="state" placeholder="State/Province" onChange = {(e) => setState(e.target.value.trim())} /></div>
                             <div className="col-5 form-group"><input className="col-12 form-control" type="text" name="country" placeholder="Country" onChange = {(e) => setCountry(e.target.value.trim())} /></div>
+                            <div className="col-10 form-group"><input className="col-12 form-control" type="text" name="phoneNo" placeholder="Phone Number" onChange = {(e) => setPhoneNo(e.target.value.trim())} /></div>
                             <div className="col-10 form-group"><input className="col-12 form-control" type="text" name="billingEmail" placeholder="Billing Email" onChange = {(e) => setBillingEmail(e.target.value.trim())} /></div>
                         </div>
                     </div>
@@ -169,11 +227,12 @@ function RegistrationForm(){
                 </div> {/*End main container*/}
                 {/* Register Button */}
                 
-                    <div className="col-12 form-group"><button className="col-8 offset-2 btn btn-primary btn-block" style={{backgroundColor:"rgba(35, 48, 24, 1)"}} onClick={submitHandler}>Register</button></div>
+                    <div className="col-12 form-group"><button disabled={disableRegBtn} className="col-8 offset-2 btn btn-primary btn-block" style={{backgroundColor:"rgba(35, 48, 24, 1)"}} onClick={submitHandler}>Register</button></div>
                     <label className="col-12 already">You already have an account? <a href="#" onClick={moveToLoginHandler}>Login here.</a></label>                       
                     <script src="../assets/js/jquery.min.js"></script>
                     <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
             {/*End registration form */}
             </div> 
+            </>
 }
 export default RegistrationForm;

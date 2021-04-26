@@ -1,30 +1,37 @@
 import {BrowserRouter as Router} from "react-router-dom";
-import './App.css';
-import Navbar from "./components/Navbar";
-import Header from "./components/Header";
-import Main from "./components/Main"
-import { useState } from "react";
+import Navbar from "./components/HeadersAndFooters/Navbar";
+import Header from "./components/HeadersAndFooters/Header";
+import CommonHeader from "./components/HeadersAndFooters/CommonHeader";
 
-import HeaderContext from './HeaderContext';
+import Main from "./components/Main"
+import {UserContextProvider, useUserContext} from './components/UserContext';
+import 'react-toastify/dist/ReactToastify.css';
+import './App.css';
+import { Nav } from "react-bootstrap";
+
 
 function App() {
-
-  var [header, setHeader] = useState(true);
-
-  console.log("Header is here: " + header);
-
   return (
-    <Router>
-      <div >
-      <header>
-        { header ? <Navbar /> : <Header/> }
-      </header>
-        <Main setHeader = {setHeader} />
-      </div>
-      
-    </Router>
+
+      <Router>
+        <UserContextProvider>
+          <div >
+            <RenderHeader />
+            <Main  />
+          </div>      
+        </UserContextProvider>
+      </Router>
 
   );
+}
+
+function RenderHeader(){
+  const {state, dispatch} = useUserContext();
+  return (
+        <header>
+            { state.header == "HOME" ? <Navbar /> : state.header == "ADMIN" ? <Header/>  : <CommonHeader /> }
+        </header>
+  )
 }
 
 export default App;

@@ -3,6 +3,53 @@
     padding: 0;
     box-sizing: border-box;
 }
+@font-face {
+    font-family: AstroArmadaExpanded;
+    src: url("../fonts/astro-armada-cufonfonts-webfont/AstroArmada-RpXBl.woff");
+}
+.header{
+    font-size: calc(3px + 3vmin);
+    color:rgba(255, 255, 255, 1);
+    /* font-weight: bold; */
+    letter-spacing: 7px;
+    font-family:AstroArmadaExpanded;
+}
+
+
+.Application-header{
+    background: radial-gradient(at center center, rgba(184, 178, 140, 0.5) 50%, rgba(35, 48, 24, 0.5) 100%), url('./../img/backgroundImg.jpg');
+    /* background: radial-gradient(at center center, rgba(0, 0, 0, 0) 10%,rgba(35, 48, 24, 0) 90%),  url("./../img/backgroundImg2.jpg"); */
+        
+    background-repeat: no-repeat;
+    background-size: cover ;
+    /* align-items: center ;
+    justify-content: center; */
+    font-size: calc(3px + 2vmin) !important;
+    min-height: 5vh !important;
+    position:sticky !important;
+  }
+
+.Application-header img{
+    width: 8vw !important;
+    height: 10vh !important;
+}
+
+.Application-header .nav-link{
+    color:rgba(0, 0, 0, 0.6) !important;
+}
+
+#collasible-nav-dropdown{
+    color:rgba(0, 0, 0, 0.6) !important;
+}
+
+.Application-header .nav-link:hover{
+    color:rgba(0, 0, 0, 1) !important;
+}
+
+#collasible-nav-dropdown:hover{
+    color:rgba(0, 0, 0, 1) !important;
+}
+
 
 /* .ainnav{
     text-decoration: none;
@@ -127,4 +174,28 @@
     color: rgba(255, 255, 255, 1);
     
   }
+
+.Application-header2{
+    background: radial-gradient(at center center, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0.5) 100%), url('./../img/backgroundImg.jpg');
+    background-color:rgba(35, 48, 24, 1) !important;
+    z-index: 2;
+}
+
+.Application-header2 img{
+    width: 8vw !important;
+    height: 10vh !important;
+}
+
+.Application-header2 .nav-link{
+    color:rgba(255, 255, 255, 0.6) !important;
+}
+
+.Application-header2 #collasible-nav-dropdown{
+    color:rgba(255, 255, 255, 0.6) !important;
+}
+
+.Application-header2 .nav-link:hover{
+    color:rgba(255, 255, 255, 1) !important;
+}
+
 

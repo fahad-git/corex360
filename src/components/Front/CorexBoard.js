@@ -8,10 +8,9 @@ import RegistrationForm from './RegistrationForm';
 import LoginForm from './LoginForm';
 import { ToastContainer } from 'react-toastify';
 import { useUserContext } from '../UserContext';
-import { LOGIN_MODAL_OPEN, LOGIN_MODAL_CLOSE, 
-    REGISTER_MODAL_OPEN, REGISTER_MODAL_CLOSE,
-    FORGET_PASSWORD_MODAL_OPEN, FORGET_PASSWORD_MODAL_CLOSE } from '../Actions/user';
 import ForgetPassword from './ForgetPassword';
+import { LOGIN_MODAL_OPEN, LOGIN_MODAL_CLOSE, REGISTER_MODAL_OPEN, REGISTER_MODAL_CLOSE,
+    FORGET_PASSWORD_MODAL_OPEN, FORGET_PASSWORD_MODAL_CLOSE } from '../Actions/user';
 
 
 /*
@@ -24,7 +23,7 @@ font Astro Armada Expanded
 https://ionicons.com/v2/
 */
 
-function Home(){
+function CorexBoard(){
 
     const {state, dispatch} = useUserContext();
 
@@ -73,7 +72,7 @@ function Home(){
                 centered
                 className="login-modal"
                 >
-                        {<LoginForm headerName="COREX 365" />}
+                        {<LoginForm headerName="COREX BOARD" />}
                  </Modal>   
 
                 {/* Modal 3 this modal is for forget password*/}
@@ -100,9 +99,8 @@ function Home(){
                 pauseOnHover
                 />
 
-                <h1>COREX</h1>
-                <h1 style={ {letterSpacing : "15px"}}>PLANNING</h1>
-                <p>Planning Management Service</p>
+                <h1>COREX Board</h1>
+                <p>Keep an eye on your employees</p>
                 <div className="home_button">
                     <button onClick={login_btn_click_handler} className="home_btn_login" >Login</button>
                     <button onClick={register_btn_click_handler} className="home_btn_register" >Register</button>
@@ -111,4 +109,4 @@ function Home(){
             </>
 }
 
-export default Home;
+export default CorexBoard;

@@ -1,6 +1,6 @@
 body{
     background-color: rgba(184, 178, 140, 1);
-    overflow: hidden;
+    overflow-y: scroll;
 }
 .dashboard{
     margin:0;
@@ -12,7 +12,7 @@ body{
 
 .dashboard .container{
     position: relative;
-    top:12vh;   
+    top:12vh;  
 }  
 
 .dashboard .circular-progress{
