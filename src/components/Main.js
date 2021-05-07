@@ -14,26 +14,30 @@ import Profile from './Admin/Profile';
 import { useUserContext } from './UserContext';
 import USER, { TOGGLE_HEADER } from './Actions/user';
 import DashboardUser from './DashboardUser';
+import EmployeeManagement from './EmployeeManagement';
 
 function Main () {
 
     const { state, dispatch } = useUserContext();
     const history = useHistory();
 
+    const OpenUrls = ["/home", "/corax-board", "/services", "/contact-us", "/about-us"]
+
     useEffect(() => {
         try{
             const user = localStorage.getItem("user")
-            console.log(user)
             if(user){
                 const usr = JSON.parse(user)
                 dispatch({type: USER, payload: usr})
                 if(usr.role == "super admin"){
                     dispatch({type: TOGGLE_HEADER, header:"ADMIN"})
-                    history.push("/dashboard")
+                    if(OpenUrls.includes(history.location.pathname))
+                        history.push("/dashboard")
                 }
                 else{
                     dispatch({type: TOGGLE_HEADER, header:"USER"})
-                    history.push("/corex-board/dashboard")
+                    if(OpenUrls.includes(history.location.pathname))
+                        history.push("/corax-board/dashboard")
                 }
             }
         }catch(e){
@@ -54,8 +58,9 @@ function Main () {
             <Route exact path='/settings'> <Settings /> </Route>
             <Route exact path='/profile'> <Profile /> </Route>
 
-            <Route exact path='/corex-board'><CorexBoard /> </Route>
-            <Route exact path='/corex-board/dashboard'><DashboardUser /> </Route>
+            <Route exact path='/corax-board'><CorexBoard /> </Route>
+            <Route exact path='/corax-board/dashboard'><DashboardUser /> </Route>
+            <Route path="/corax-board/employee-management"><EmployeeManagement /> </Route>
 
             <Redirect to="/home" />
         </Switch>

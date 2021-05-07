@@ -15,3 +15,24 @@
     letter-spacing: 7px;
     font-family:AstroArmadaExpanded;
 }
+
+.select-status{
+    width: 300px !important;
+}
+
+.user-info-box{
+    border: 2px solid black !important;
+    width: 300px !important;
+    box-shadow: 5px 5px #3f3a3a;
+}
+
+
+@media screen and (max-width: 330px){
+    .select-status{
+        width: 200px !important;
+    }
+    
+    .user-info-box{
+        width: 200px !important;
+    }
+}

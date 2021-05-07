@@ -49,10 +49,10 @@ const Navigationbar = () => {
               <Nav.Link className="ml-4" href="/about-us">About Us</Nav.Link>
 
               <NavDropdown className="ml-4" title="Services" id="collasible-nav-dropdown">
-                <NavDropdown.Item href="/corex-board" className="item-color">Corex Board</NavDropdown.Item>
-                <NavDropdown.Item href="/services#action2" className="item-color">Corex Goal</NavDropdown.Item>
-                <NavDropdown.Item href="/services#action3" className="item-color">Corex Planning</NavDropdown.Item>
-                <NavDropdown.Item href="/services#action2" className="item-color">Corex Stats</NavDropdown.Item>
+                <NavDropdown.Item href="/corax-board" className="item-color">Corax Board</NavDropdown.Item>
+                <NavDropdown.Item href="/services#action2" className="item-color">Corax Goal</NavDropdown.Item>
+                <NavDropdown.Item href="/services#action3" className="item-color">Corax Planning</NavDropdown.Item>
+                <NavDropdown.Item href="/services#action2" className="item-color">Corax Stats</NavDropdown.Item>
               </NavDropdown>
 
               <NavDropdown className="ml-4" title="Accounts" id="collasible-nav-dropdown">

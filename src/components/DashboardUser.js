@@ -1,17 +1,26 @@
 import React, { useEffect, useState} from 'react';
-import { Container, Row, Col, Table, Form, Modal, ModalBody } from "react-bootstrap";
+import { Container, Row, Col, Table, Form, Modal } from "react-bootstrap";
 import './../assets/css/DashboardUser.css'
 
 import { GetAllEmployeesByCompanyId, GetAllAdminsByCompanyId, ChangeAdminCurrentStatus, ChangeEmployeeCurrentStatus } from './Services/CorexBoard';
-
 
 import Select, { components } from 'react-select'
 import { useUserContext } from './UserContext';
 import USER, { PROFILE_MODAL_CLOSE } from './Actions/user';
 import { ToastContainer, toast } from 'react-toastify';
- 
 import Profile from "./Profile";
 
+const CurrentStatusMapping = {
+    1: "Available",
+    2: "Absent",
+    3: "With Customer",
+    4: "Break"
+}
+
+function getKeyByValue(value) {
+    return Object.keys(CurrentStatusMapping).find(key => CurrentStatusMapping[key] === value);
+  }
+  
 const { Option } = components
 
 const CustomSelectOption = props => (
@@ -22,33 +31,30 @@ const CustomSelectOption = props => (
 )
 
 const CustomSelectValue = props => {
-    
     const user = JSON.parse(localStorage.getItem("user"));
     const {State, dispatch} = useUserContext();
 
-    useEffect(() => {
-
+    useEffect(() => {   
         if(user.role == "admin"){
-            ChangeAdminCurrentStatus({"adminId":user.adminId, "status": props.data.label})
+            ChangeAdminCurrentStatus({"adminId":user.adminId, "status": parseInt(getKeyByValue(props.data.label)) })
             .then(res =>{
 
                 var usr = JSON.parse(localStorage.getItem("user"));
-                usr.currentStatus = props.data.label;
+                usr.currentStatus = getKeyByValue(props.data.label);
                 localStorage.setItem("user",JSON.stringify(usr));
                 dispatch({type:USER, payload:usr})
 
                 // toast("Status Updated", {type:"info"});
-
             }).catch(err => {
                 props.data.label = "";
                 toast("Status Update failed", {type:"error"});
             })
         }else{
-            ChangeEmployeeCurrentStatus({"employeeId":user.employeeId, "status": props.data.label})
+            ChangeEmployeeCurrentStatus({"employeeId":user.employeeId, "status": parseInt(getKeyByValue(props.data.label)) })
             .then(res =>{
                 
                 var usr = JSON.parse(localStorage.getItem("user"));
-                usr.currentStatus = props.data.label;
+                usr.currentStatus = getKeyByValue(props.data.label);
                 localStorage.setItem("user",JSON.stringify(usr));
                 dispatch({type:USER, payload:usr})
 
@@ -79,64 +85,83 @@ const CustomSelectValue = props => {
 
         var [admins, setAdmins] = useState([]);
         var [employees, setEmployees] = useState([]);
+        var [allEmployeesView, setAllEmployeesView] = useState([])
+        var [allEmployees, setAllEmployees] = useState([])
 
-        var [myStatus, setMyStatus] = useState(options[0]);
+        var [myStatus, setMyStatus] = useState();
 
         const {state, dispatch} = useUserContext();
 
         const user = JSON.parse(localStorage.getItem("user"));
 
         const colorLookup = {
-        "Available":"green",
-        "Absent":"black",
-        "With Customer":"blue",
-        "Break":"yellow"
+        1:"green",
+        2:"black",
+        3:"blue",
+        4:"yellow"
         }
 
         const setStatusHandler = (status) => {
-            switch(status){
-                case "Available":
-                    setMyStatus(options[0]);
-                    break;
-                case "Absent":
-                    setMyStatus(options[1]);
-                    break;
-                case "With Customer":
-                    setMyStatus(options[2]);
-                    break;
-                case "Break":
-                    setMyStatus(options[3]);
-                    break;
-            }
-            return null;
+            //  Because status start from 1 and options from 0
+            setMyStatus(options[status - 1])
+            // switch(status){
+            //     case "Available":
+            //         setMyStatus(options[0]);
+            //         break;
+            //     case "Absent":
+            //         setMyStatus(options[1]);
+            //         break;
+            //     case "With Customer":
+            //         setMyStatus(options[2]);
+            //         break;
+            //     case "Break":
+            //         setMyStatus(options[3]);
+            //         break;
+            // }
+            return;
         }
+        console.log(user)
+        const filterHandler = (e) => {
+            console.log(e.target.value)
+            if(!e.target.value){
+                setAllEmployees(allEmployeesView);
+                return;
+            }
+
+            let arr = allEmployeesView.filter((currentValue, index, arr) => {
+                return currentValue.currentStatus == e.target.value;
+             })
+             console.log(arr)
+             setAllEmployees(arr);
+        }
+        
 
     useEffect(() => {
-        
         setStatusHandler(user.currentStatus);
         GetAllEmployeesByCompanyId()
-        .then(res => {
-            console.log(res.data);
-            setEmployees(res.data);
+        .then(response => {
+            setEmployees(response.data);
+            GetAllAdminsByCompanyId()
+            .then(res => {
+                console.log(res.data);
+                console.log(response.data);
+                setAdmins(res.data);
+                let arr = [...res.data, ...response.data];
+                setAllEmployees(arr)
+                setAllEmployeesView(arr)
+            }).catch(err =>{
+                console.log(err);
+            })
         }).catch(err =>{
             console.log(err);
         })
-
-        GetAllAdminsByCompanyId()
-        .then(res => {
-            console.log(res.data);
-            setAdmins(res.data);
-        }).catch(err =>{
-            console.log(err);
-        })
-
     }, [])
 
     return  <>
             <ToastContainer
                 position="top-center"
                 autoClose={5000}
-                hideProgressBar={false}
+                hideProgressBar={true}
                 newestOnTop={false}
                 closeOnClick
                 rtl={false}
@@ -167,14 +192,25 @@ const CustomSelectValue = props => {
                         <h2 className="text-center heading">Dashboard </h2>
                     </Col>
                 </Row>
-                <Row className="my-3">
-                    <Col>
-                        <h3>{user.adminName }</h3>
-                        <h4>{user.title}</h4>
+                <Row className="my-5">
+                    <Col xs={12} sm={5}>
+                        <div className="user-info-box px-3 mt-3">
+                            <h3>Name: {user.adminName }</h3>
+                            <h4>Title: {user.title}</h4>
+                        </div>
                     </Col>
                     <Col></Col>
-                    <Col>
-                        <Form.Group controlId="exampleForm.SelectCustom">
+                    <Col xs={12} sm="auto">
+                        <div className="user-info-box px-3 mt-3">
+                            <h3>Position: {1}</h3>
+                            <h4>Total Available: {25}</h4>
+                        </div>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={12} sm={5}>
+
+                    <Form.Group controlId="exampleForm.SelectCustom">
                             {/* <Form.Label><center>Availability Status</center></Form.Label>
                             <Form.Control as="select" className="col-10" custom>
                             <option>Available</option>
@@ -183,12 +219,30 @@ const CustomSelectValue = props => {
                             <option>Break</option>
                             </Form.Control>
                             <i className="col-2 ion-record"></i> */}
+                        <Form.Label><center>My Status</center></Form.Label>
                         <Select
+                            className="select-status"
                             options={options}
-                            placeholder={<CustomSelectValue data = {myStatus}/>}
+                            placeholder={myStatus ? <CustomSelectValue data = {myStatus} />  : ""}
                             components={{ Option: CustomSelectOption, SingleValue: CustomSelectValue}}
                             />
                         </Form.Group>
+                    </Col>
+                    <Col></Col>
+                    <Col xs={12} sm="auto">
+                        <Form>
+                            <Form.Group controlId="exampleForm.SelectCustom" onChange={filterHandler}>
+                                <Form.Label><center>Filter</center></Form.Label>
+                                <br/>
+                                <Form.Control as="select" className="select-status" custom>
+                                    <option value="">No Filter</option>
+                                    <option value={1}>Available</option>
+                                    <option value={2}>Absent</option>
+                                    <option value={3}>With Customer</option>
+                                    <option value={4}>Break</option>
+                                </Form.Control>
+                            </Form.Group>
+                        </Form>
                     </Col>
                 </Row>
                 <Row className="mb-5">
@@ -204,14 +258,14 @@ const CustomSelectValue = props => {
                         </tr>
                         </thead>
                         <tbody>
-                        {
+                        {/* {
                             admins.map( admin => (
                                 // admin.adminId == user.adminId? <tr key={"admin" + admin.adminId}></tr> :
                                 <tr key={"admin" + admin.adminId}>
                                     <td>{admin.adminName}</td>
                                     <td>{admin.title}</td>
                                     <td>{admin.email}</td>
-                                    <td>{admin.currentStatus}</td>
+                                    <td>{CurrentStatusMapping[admin.currentStatus] }</td>
                                     <td className="text-center"><i className="ion-record" style={{color:colorLookup[admin.currentStatus]}} ></i></td>
                                 </tr>
                         ))}
@@ -222,10 +276,33 @@ const CustomSelectValue = props => {
                                     <td>{employee.employeeName}</td>
                                     <td>{employee.position}</td>
                                     <td>{employee.email}</td>
-                                    <td>{employee.currentStatus}</td>
+                                    <td>{CurrentStatusMapping[employee.currentStatus]}</td>
                                     <td className="text-center"><i className="ion-record" style={{color:colorLookup[employee.currentStatus]}} ></i></td>
                                 </tr>
-                        ))}
+                        ))} */}
+                        {
+                            allEmployees.map( employee => employee.adminId?
+                                (
+                                    // admin.adminId == user.adminId? <tr key={"admin" + admin.adminId}></tr> :
+                                    <tr key={"admin" + employee.adminId}>
+                                        <td>{employee.adminName}</td>
+                                        <td>{employee.title}</td>
+                                        <td>{employee.email}</td>
+                                        <td>{CurrentStatusMapping[employee.currentStatus] }</td>
+                                        <td className="text-center"><i className="ion-record" style={{color:colorLookup[employee.currentStatus]}} ></i></td>
+                                    </tr>
+                                )
+                                :                                
+                                (
+                                <tr key={"employee" + employee.employeeId}>
+                                    <td>{employee.employeeName}</td>
+                                    <td>{employee.position}</td>
+                                    <td>{employee.email}</td>
+                                    <td>{CurrentStatusMapping[employee.currentStatus]}</td>
+                                    <td className="text-center"><i className="ion-record" style={{color:colorLookup[employee.currentStatus]}} ></i></td>
+                                </tr>
+                                )
+                            )}
                         </tbody>
                     </Table>
                     </Col>

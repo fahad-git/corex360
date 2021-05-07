@@ -42,7 +42,7 @@ function LoginForm(props) {
                 history.push("/dashboard");
             }else{
                 dispatch({type:TOGGLE_HEADER, header:"USER"})
-                history.push("/corex-board/dashboard");
+                history.push("/corax-board/dashboard");
             }
         }).catch(err => {
             setErrorMessage(["block","Invalid username or password"]);

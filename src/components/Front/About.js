@@ -7,7 +7,7 @@ function About(){
     return  <div>
                 <div className="about">
                     <h1 >About Us</h1>
-                    <p>Corex360 is planning management service</p>
+                    <p>Corax360 is planning management service</p>
                 </div>
             </div>
     

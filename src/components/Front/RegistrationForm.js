@@ -51,24 +51,25 @@ function RegistrationForm(){
     var [error2, setError2] = useState({"display":"none", "msg":""});
 
     const submitHandler = () =>{
-        let primaryContact = {
-            "primaryName":primaryName,
-            "primaryTitle":primaryTitle,
-            "primaryPhoneNumber":primaryPhoneNumber,
-            "primaryMobile":primaryMobile,
-            "primaryEmail":primaryEmail,
-            "primaryPassword":primaryPassword
-        }
+        // let primaryContact = {
+        //     "primaryName":primaryName,
+        //     "primaryTitle":primaryTitle,
+        //     "primaryPhoneNumber":primaryPhoneNumber,
+        //     "primaryMobile":primaryMobile,
+        //     "primaryEmail":primaryEmail,
+        //     "primaryPassword":primaryPassword
+        // }
 
-        let secondaryContact = {
-            "secondaryName":secondaryName,
-            "secondaryTitle":secondaryTitle,
-            "secondaryPhoneNumber":secondaryPhoneNumber,
-            "secondaryMobile":secondaryMobile,
-            "secondaryEmail":secondaryEmail,
-            "secondaryPassword":secondaryPassword
-        }
+        // let secondaryContact = {
+        //     "secondaryName":secondaryName,
+        //     "secondaryTitle":secondaryTitle,
+        //     "secondaryPhoneNumber":secondaryPhoneNumber,
+        //     "secondaryMobile":secondaryMobile,
+        //     "secondaryEmail":secondaryEmail,
+        //     "secondaryPassword":secondaryPassword
+        // }
 
+        const today = new Date();
         let insertedObj = {
             "employees": [
             ],
@@ -86,7 +87,9 @@ function RegistrationForm(){
                     "title": primaryTitle,
                     "phoneNo": primaryPhoneNumber,
                     "email": primaryEmail,
-                    "mobile": primaryMobile
+                    "mobile": primaryMobile,
+                    "currentStatus":1,
+                    "currentStatusDate": today.toISOString()
                 },
                 {
                     "login": {
@@ -101,7 +104,9 @@ function RegistrationForm(){
                     "title":secondaryTitle,
                     "phoneNo": secondaryPhoneNumber,
                     "email": secondaryEmail,
-                    "mobile": secondaryMobile
+                    "mobile": secondaryMobile,
+                    "currentStatus":1,
+                    "currentStatusDate": today.toISOString()
                 }
             ],
             "companyName": companyName,
@@ -113,6 +118,7 @@ function RegistrationForm(){
             "country": country
         }
 
+        
         console.log(insertedObj);
         Register(insertedObj)
         .then(res => {

@@ -5,7 +5,7 @@ function Services(){
     return  <div>
                 <div className="services">
                     <h1 >Our Services</h1>
-                    <p>Corex360 is planning management service</p>
+                    <p>Corax360 is planning management service</p>
                 </div>
             </div>
 }

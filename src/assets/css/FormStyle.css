@@ -1,0 +1,7 @@
+.err{
+    color:red;
+}
+
+.pass-field{
+    border: 2px solid black !important;
+}

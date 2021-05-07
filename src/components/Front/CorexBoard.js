@@ -57,7 +57,7 @@ function CorexBoard(){
                 className="register-modal"
                 >
                     <Modal.Header className="jumbotron">
-                        <h3 className="col-12 bar"><center>REGISTER TO<br/>COREX PLANNING</center></h3>
+                        <h3 className="col-12 bar"><center>REGISTER TO<br/>CORAX Board</center></h3>
                     </Modal.Header>
                     <Modal.Body >
                         {<RegistrationForm />}
@@ -72,7 +72,7 @@ function CorexBoard(){
                 centered
                 className="login-modal"
                 >
-                        {<LoginForm headerName="COREX BOARD" />}
+                        {<LoginForm headerName="CORAX BOARD" />}
                  </Modal>   
 
                 {/* Modal 3 this modal is for forget password*/}
@@ -99,7 +99,7 @@ function CorexBoard(){
                 pauseOnHover
                 />
 
-                <h1>COREX Board</h1>
+                <h1>CORAX Board</h1>
                 <p>Keep an eye on your employees</p>
                 <div className="home_button">
                     <button onClick={login_btn_click_handler} className="home_btn_login" >Login</button>

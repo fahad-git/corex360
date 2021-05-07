@@ -46,6 +46,7 @@ function Home(){
             // alert("ok");
      }
 
+
     return <>
             <div className="home">
                 {/* Modals */}
@@ -58,7 +59,7 @@ function Home(){
                 className="register-modal"
                 >
                     <Modal.Header className="jumbotron">
-                        <h3 className="col-12 bar"><center>REGISTER TO<br/>COREX PLANNING</center></h3>
+                        <h3 className="col-12 bar"><center>REGISTER TO<br/>CORAX 360</center></h3>
                     </Modal.Header>
                     <Modal.Body >
                         {<RegistrationForm />}
@@ -73,7 +74,7 @@ function Home(){
                 centered
                 className="login-modal"
                 >
-                        {<LoginForm headerName="COREX 365" />}
+                        {<LoginForm headerName="CORAX 360" />}
                  </Modal>   
 
                 {/* Modal 3 this modal is for forget password*/}
@@ -100,9 +101,8 @@ function Home(){
                 pauseOnHover
                 />
 
-                <h1>COREX</h1>
-                <h1 style={ {letterSpacing : "15px"}}>PLANNING</h1>
-                <p>Planning Management Service</p>
+                <h1 style={ {letterSpacing : "15px"}} >CORAX 360</h1>
+                <p>Business Management Service</p>
                 <div className="home_button">
                     <button onClick={login_btn_click_handler} className="home_btn_login" >Login</button>
                     <button onClick={register_btn_click_handler} className="home_btn_register" >Register</button>

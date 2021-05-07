@@ -31,6 +31,8 @@ export function ChangeEmployeeCurrentStatus(parameters){
 }
 
 export function ChangeAdminCurrentStatus(parameters){
+    console.log(parameters)
+
     const user = JSON.parse(localStorage.getItem("user"));
     if(!user)
         return axios.get(Base_URL + "/changeAdminStatus")
