@@ -27,7 +27,9 @@ function RegistrationForm(){
     var [primaryTitle, setPrimaryTitle] = useState('');
     var [primaryPhoneNumber, setPrimaryPhoneNumber] = useState('');
     var [primaryMobile, setPrimaryMobile] = useState('');
+    var [primaryUsername, setPrimaryUsername] = useState('');
     var [primaryEmail, setPrimaryEmail] = useState('');
+    var [primaryAddress, setPrimaryAddress] = useState('');
     var [primaryPassword, setPrimaryPassword] = useState('');
     var [confirmPrimaryPassword, setConfirmPassword] = useState('');
 
@@ -36,6 +38,8 @@ function RegistrationForm(){
     var [secondaryPhoneNumber, setSecondaryPhoneNumber] = useState('');
     var [secondaryMobile, setSecondaryMobile] = useState('');
     var [secondaryEmail, setSecondaryEmail] = useState('');
+    var [secondaryUsername, setSecondaryUsername] = useState('');
+    var [secondaryAddress, setSecondaryAddress] = useState('');
     var [secondaryPassword, setSecondaryPassword] = useState('');
     var [confirmSecondaryPassword, setConfirmSecondaryPassword] = useState('');
 
@@ -72,42 +76,43 @@ function RegistrationForm(){
         const today = new Date();
         let insertedObj = {
             "employees": [
-            ],
-            "admins": [
+            
                 {
                     "login": {
                         "employees": null,
                         "superAdmin": null,
-                        "username": primaryEmail,
+                        "username": primaryUsername,
                         "password": primaryPassword,
                         "status": "Active",
                         "roleId": 2
                     },
-                    "adminName": primaryName,
-                    "title": primaryTitle,
+                    "employeeName": primaryName,
+                    "position": primaryTitle,
                     "phoneNo": primaryPhoneNumber,
                     "email": primaryEmail,
-                    "mobile": primaryMobile,
+                    "mobileNo": primaryMobile,
+                    "address": primaryAddress,
                     "currentStatus":1,
                     "currentStatusDate": today.toISOString()
                 },
-                {
-                    "login": {
-                        "employees": null,
-                        "superAdmin": null,
-                        "username": secondaryEmail,
-                        "password": secondaryPassword,
-                        "status": "Active",
-                        "roleId": 2
-                    },
-                    "adminName": secondaryName,
-                    "title":secondaryTitle,
-                    "phoneNo": secondaryPhoneNumber,
-                    "email": secondaryEmail,
-                    "mobile": secondaryMobile,
-                    "currentStatus":1,
-                    "currentStatusDate": today.toISOString()
-                }
+                // {
+                //     "login": {
+                //         "employees": null,
+                //         "superAdmin": null,
+                //         "username": secondaryUsername,
+                //         "password": secondaryPassword,
+                //         "status": "Active",
+                //         "roleId": 2
+                //     },
+                //     "employeeName": secondaryName,
+                //     "position":secondaryTitle,
+                //     "phoneNo": secondaryPhoneNumber,
+                //     "email": secondaryEmail,
+                //     "address": secondaryAddress,
+                //     "mobileNo": secondaryMobile,
+                //     "currentStatus":1,
+                //     "currentStatusDate": today.toISOString()
+                // }
             ],
             "companyName": companyName,
             "town":town,
@@ -187,6 +192,8 @@ function RegistrationForm(){
                             <div className="col-5 form-group"><input className="col-12 form-control" type="text" name="primaryPhoneNumber" placeholder="Phone Number" onChange = {(e) => setPrimaryPhoneNumber(e.target.value.trim())} /></div>
                             <div className="col-5 form-group"><input className="col-12 form-control" type="text" name="primaryMobile" placeholder="Mobile" onChange = {(e) => setPrimaryMobile(e.target.value.trim())} /></div>
                             <div className="col-10 form-group"><input className="col-12 form-control" type="text" name="primaryEmail" placeholder="Email" onChange = {(e) => setPrimaryEmail(e.target.value.trim())} /></div>
+                            <div className="col-10 form-group"><input className="col-12 form-control" type="text" name="primaryUsername" placeholder="Username" onChange = {(e) => setPrimaryUsername(e.target.value.trim())} /></div>
+                            <div className="col-10 form-group"><input className="col-12 form-control" type="text" name="primaryAddress" placeholder="Address" onChange = {(e) => setPrimaryAddress(e.target.value.trim())} /></div>
                             <div className="col-10 form-group ">
                                 <div className="col-12 form-control">
                                     <input className="col-9 col-md-9 col-lg-10 passwordfield" type={ (primary_password_eye_icon=== "ion-eye") ? "password" : "text"} name="primaryPassword" placeholder="Password" onFocus={() => setError1({"display":"none","msg":""})} onBlur={validatePrimaryPassword} onChange = {(e) => setPrimaryPassword(e.target.value.trim())} />
@@ -203,7 +210,7 @@ function RegistrationForm(){
 
                         </div>
                     </div>
-
+{/* 
                     <div className="row justify-content-center">
                         <h3 className="col-10">Secondary Contact <hr className="col-11 divider"/></h3>
                     </div>
@@ -214,6 +221,8 @@ function RegistrationForm(){
                             <div className="col-5 form-group"><input className="col-12 form-control" type="text" name="secondaryPhoneNumber" placeholder="Phone Number" onChange = {(e) => setSecondaryPhoneNumber(e.target.value.trim())} /></div>
                             <div className="col-5 form-group"><input className="col-12 form-control" type="text" name="secondaryMobile" placeholder="Mobile" onChange = {(e) => setSecondaryMobile(e.target.value.trim())} /></div>
                             <div className="col-10 form-group"><input className="col-12 form-control" type="text" name="secondaryEmail" placeholder="Email" onChange = {(e) => setSecondaryEmail(e.target.value.trim())} /></div>
+                            <div className="col-10 form-group"><input className="col-12 form-control" type="text" name="secondaryUsername" placeholder="Username" onChange = {(e) => setSecondaryUsername(e.target.value.trim())} /></div>
+                            <div className="col-10 form-group"><input className="col-12 form-control" type="text" name="secondaryAddress" placeholder="Address" onChange = {(e) => setSecondaryAddress(e.target.value.trim())} /></div>
                             <div className="col-10 form-group ">
                                 <div className="col-12 form-control">
                                     <input className="col-9 col-md-9 col-lg-10 passwordfield" type={ (secondary_password_eye_icon=== "ion-eye") ? "password" : "text"} name="secondaryPassword" placeholder="Password" onFocus={() => setError2({"display":"none","msg":""})} onBlur={validateSecondaryPassword}   onChange = {(e) => setSecondaryPassword(e.target.value.trim())} />
@@ -228,7 +237,7 @@ function RegistrationForm(){
                             </div>
                             <div className="col-8 form-group" style={{display:error2["display"], color:"red", align:"right"}}>{error2["msg"]}</div>
                         </div>
-                    </div>
+                    </div> */}
 
                 </div> {/*End main container*/}
                 {/* Register Button */}

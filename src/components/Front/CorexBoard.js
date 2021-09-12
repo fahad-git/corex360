@@ -103,7 +103,7 @@ function CorexBoard(){
                 <p>Keep an eye on your employees</p>
                 <div className="home_button">
                     <button onClick={login_btn_click_handler} className="home_btn_login" >Login</button>
-                    <button onClick={register_btn_click_handler} className="home_btn_register" >Register</button>
+                    {/* <button onClick={register_btn_click_handler} className="home_btn_register" >Register</button> */}
                 </div>
             </div>
             </>

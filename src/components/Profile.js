@@ -4,12 +4,20 @@ import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from 'react-toastify';
 import PassField from "./Controls/PassField";
 
+const CurrentStatusMapping = {
+    1: "Available",
+    2: "Absent",
+    3: "With Customer",
+    4: "Break",
+  };
+
 function Profile(){
 
     const user = JSON.parse(localStorage.getItem("user"));
 
     var [disableFields, setDisableFields] = useState(true)
     var [showChangePass, toggleChangePass] = useState(false);
+    var [empId, setEmpId] = useState()
 
     const styles = {
         error: {
@@ -32,12 +40,10 @@ function Profile(){
     }
 
     useEffect(() => {
-        setValue('name', user.role == "admin" ? user.adminName : user.employeeName);
-        setValue('title', user.title)
+        console.log(user)
+        setValue('name',  user.employeeName);
         setValue('email', user.email)
-        setValue('phone', user.phoneNo)
-        setValue('mobile', user.mobile)
-
+        setValue('mobile', user.mobileNo)
     }, [])
 
     return  <>
@@ -68,10 +74,8 @@ function Profile(){
 
                 <Form.Group as={Row} controlId="formBasicTitle">
                     <Col sm={{span:12, offset:0}}>
-                        <Form.Label>Title</Form.Label>
-                        <Form.Control disabled={disableFields} name="title" type="text" value = {formState.title} {...register("title" ,  {required:true, minLength:3})} />
-                        {errors.title?.type === "required" && <div style={styles.error}>{"⚠ This field is mandatory."} </div> }
-                        {errors.title?.type === "minLength" && <div style={styles.error}>{"⚠ Your input is less than minimum length"} </div> }                             
+                        <Form.Label>Role</Form.Label>
+                        <Form.Control disabled={true} name="role" type="text" value = {user.role} />
                     </Col>
                 </Form.Group> 
 
@@ -84,14 +88,6 @@ function Profile(){
                     </Col>
                 </Form.Group>   
 
-                <Form.Group as={Row} controlId="formBasicPhone">
-                    <Col sm={{span:12, offset:0}}>
-                        <Form.Label>Phone</Form.Label>
-                        <Form.Control disabled={disableFields} name="phone" type="text"  value = {formState.phone}   {...register("phone", {required:true, minLength:3})} />
-                        {errors.phone?.type === "required" && <div style={styles.error}>{"⚠ This field is mandatory."} </div> }
-                        {errors.phone?.type === "minLength" && <div style={styles.error}>{"⚠ Your input is less than minimum length"} </div> }                             
-                    </Col>
-                </Form.Group>   
 
 
                 <Form.Group as={Row} controlId="formBasicMobile">
@@ -104,6 +100,14 @@ function Profile(){
                 </Form.Group>   
 
 
+                <Form.Group as={Row} controlId="formBasicPhone">
+                    <Col sm={{span:12, offset:0}}>
+                        <Form.Label>Current Status</Form.Label>
+                        <Form.Control disabled={true} type="text"  value = {CurrentStatusMapping[user.currentStatus]}  />
+                        {errors.phone?.type === "required" && <div style={styles.error}>{"⚠ This field is mandatory."} </div> }
+                        {errors.phone?.type === "minLength" && <div style={styles.error}>{"⚠ Your input is less than minimum length"} </div> }                             
+                    </Col>
+                </Form.Group>   
 
                 <Button variant="link" onClick={ () => toggleChangePass(!showChangePass)}>Change Password</Button>
 

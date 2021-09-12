@@ -11,20 +11,25 @@ import {GetAllEmployeesByCompanyId} from './Services/CorexBoard';
 
 import SearchField from "react-search-field";
 import AddEmployee from './AddEmployee';
+import EmployeeProfile from "./EmployeeProfile";
 
 function EmployeeManagement(){
 
     var [searchQuery, setSearchQuery] = useState('');
     var [usersInformation, setUsersInformation] = useState([]);
-
+    const user = JSON.parse(localStorage.getItem("user"));
     var [isAddUserOpen, addUserToggle] = useState(false);
+    var [isEmployeeProfileOpen, employeeProfileToggle] = useState(false);
+    var [employeeProfile, setEmployeeProfile] = useState();
 
     const searchHandler = (val) => {
         console.log("Search: ", val)
     }
     
-    const userInfoHandler = (id) => {
+    const userInfoHandler = (employeeId) => {
         console.log("From Handler");
+        setEmployeeProfile(<EmployeeProfile employeeId = {employeeId} />)
+        employeeProfileToggle(true);
     }
 
     const addUserHandler = () => {
@@ -54,13 +59,29 @@ function EmployeeManagement(){
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
                 >
-                    <Modal.Header className="jumbotron">
+                    <Modal.Header className="jumbotron" >
                         <h3 className="col-12"><center>ADD EMPLOYEE</center></h3>
                     </Modal.Header>
                     <Modal.Body >
                         {<AddEmployee/>}
                     </Modal.Body>
                 </Modal>
+
+                {/* Modal 2 this modal is for Employee Profile*/}
+                <Modal show={isEmployeeProfileOpen}
+                onHide = {e => employeeProfileToggle(false)}
+                size="md"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                >
+                    <Modal.Header className="jumbotron" >
+                        <h3 className="col-12"><center>ADD EMPLOYEE</center></h3>
+                    </Modal.Header>
+                    <Modal.Body >
+                        {employeeProfile}
+                    </Modal.Body>
+                </Modal>
+
 
                 <Container>
                     <Row className="mb-5">
@@ -99,14 +120,13 @@ function EmployeeManagement(){
                     <Container>
                         <Row className="justify-content-center align-items-center">
                             <Col>
-                                {usersInformation.map( ({employee_Id, employee_name, position, email, address, current_status, phone_no, company_Id}, index)=>{
+                                {usersInformation.map( ({employeeId, employeeName, position, email, address, currentStatus, phoneNo, companyId}, index)=>{
                                 return (
-                                        
-                                        <div key={"userInfo" + index} className="col-6 col-sm-4 col-md-3 col-lg-2 offset-0" style={{float:"left", marginTop:"20px"}} onClick={() => userInfoHandler(employee_Id)}>
+                                        <div  key={"userInfo" + index} className="col-6 col-sm-4 col-md-3 col-lg-2 offset-0" style={{float:"left", marginTop:"20px", cursor:"pointer", display: (employeeId == user.employeeId) ? "none" : "block"}} onClick={() => userInfoHandler(employeeId)}>
                                             <div className="card tile" style={{backgroundColor:"#424242"}}>
                                                 <img alt="Not found" className="usericon" src={admin_icon} />
                                             </div>                                                                  
-                                            <label className="card align-text-center" style={{textAlign:"center"}}>{employee_name}</label>                                               
+                                            <label className="card align-text-center" style={{textAlign:"center"}}>{employeeName}</label>                                               
                                         </div>
                                         )
                                 })}
