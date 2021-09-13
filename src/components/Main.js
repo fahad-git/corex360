@@ -16,6 +16,12 @@ import USER, { TOGGLE_HEADER } from './Actions/user';
 import DashboardUser from './DashboardUser';
 import EmployeeManagement from './EmployeeManagement';
 
+const SUPER_ADMIN_ROLE = "SUPER_ADMIN";
+const SUPER_USER_ROLE = "SUPER_USER";
+const ADMIN_ROLE = "ADMIN";
+const USER_ROLE = "USER";
+
+
 function Main () {
 
     const { state, dispatch } = useUserContext();
@@ -26,10 +32,11 @@ function Main () {
     useEffect(() => {
         try{
             const user = localStorage.getItem("user")
+            
             if(user){
                 const usr = JSON.parse(user)
                 dispatch({type: USER, payload: usr})
-                if(usr.role == "super admin"){
+                if(usr.role == SUPER_ADMIN_ROLE){
                     dispatch({type: TOGGLE_HEADER, header:"ADMIN"})
                     if(OpenUrls.includes(history.location.pathname))
                         history.push("/dashboard")
@@ -39,7 +46,7 @@ function Main () {
                     if(OpenUrls.includes(history.location.pathname))
                         history.push("/corax-board/dashboard")
                 }
-            }
+            }else history.push("/home")
         }catch(e){
             history.push("/home")
         }

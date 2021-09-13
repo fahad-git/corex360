@@ -26,6 +26,7 @@ import Profile from "./Profile";
 import axios from "axios";
 import { SOCKET_URL } from "./Config";
 
+
 const CurrentStatusMapping = {
   1: "Available",
   2: "Absent",
@@ -69,7 +70,7 @@ const CustomSelectValue = (props) => {
     // }else{
 
     ChangeEmployeeCurrentStatus({
-      employeeId: user.employeeId,
+      employeeId: user?.employeeId,
       status: parseInt(getKeyByValue(props.data.label)),
     })
       .then((res) => {
@@ -210,7 +211,7 @@ function DashboardUser() {
       }
     });
 
-    setStatusHandler(user.currentStatus);
+    setStatusHandler(user?.currentStatus);
     GetAllEmployeesByCompanyId()
       .then((response) => {
         setAllEmployees(response.data);
